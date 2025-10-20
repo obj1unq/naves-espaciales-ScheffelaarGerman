@@ -10,8 +10,10 @@ class Nave {
 	method aumentarVelocidadEn(aumentoDeVelocidad){
 		 velocidad = 300000.min(velocidad + aumentoDeVelocidad)
 	}
-	method recibirAmenaza(){
-		 
+	method recibirAmenaza(){}
+
+	method prepararseParaViajar(){
+		self.aumentarVelocidadEn(15000)
 	}
 }
 class NaveDeCarga inherits Nave{
@@ -60,6 +62,11 @@ class NaveDeCombate inherits Nave  {
 	override method recibirAmenaza() {
 		modo.recibirAmenaza(self)
 	}
+	override method prepararseParaViajar() {
+    super()
+	modo.prepararseParaViajar(self) 
+}
+
 
 }
 class NaveDeCargaRadioactiva inherits NaveDeCarga {
@@ -71,6 +78,11 @@ class NaveDeCargaRadioactiva inherits NaveDeCarga {
 	override method recibirAmenaza() {
 		velocidad = 0
 	}
+
+	override method prepararseParaViajar(){
+		self.sellar()
+		super()
+	}
 }
 
 object reposo {
@@ -81,6 +93,11 @@ object reposo {
 		nave.emitirMensaje("¡RETIRADA!")
 	}
 
+	method prepararseParaViajar(nave){
+		nave.modo(ataque)
+		nave.emitirMensaje("Saliendo en mision")
+	}
+
 }
 
 object ataque {
@@ -89,6 +106,10 @@ object ataque {
 
 	method recibirAmenaza(nave) {
 		nave.emitirMensaje("Enemigo encontrado")
+	}
+
+	method prepararseParaViajar(nave){
+		nave.emitirMensaje("Volviendo a la base")
 	}
 
 }

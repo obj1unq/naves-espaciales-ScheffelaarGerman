@@ -107,3 +107,35 @@ describe "Nave de carga radioactiva" {
     }
 }
 
+describe "Prepararse para viajar" {
+
+    test "Nave de pasajero velocidad 290000 se prepara para viajar" {
+        const nave = new NaveDePasajeros(velocidad = 290000)
+        nave.prepararseParaViajar()
+        assert.equals(300000, nave.velocidad())
+    }
+
+    test "Nave radioctiva se prepara para viajar" {
+        const nave = new NaveDeCargaRadioactiva(velocidad = 0, sellado = false)
+        nave.prepararseParaViajar()
+        assert.equals(15000, nave.velocidad())
+        assert.that(nave.sellado())      
+    }
+
+    test "Nave en modo compate se preapra para viajar" {
+        const nave = new NaveDeCombate(modo = ataque, velocidad = 0)
+        nave.prepararseParaViajar()
+        assert.equals(15000, nave.velocidad())
+        assert.equals("Volviendo a la base", nave.ultimoMensaje())
+    }
+
+    test "Nave de combate en modo reposo se prepara para viajar " {
+        const nave = new NaveDeCombate(modo = reposo, velocidad = 0)
+        nave.prepararseParaViajar()
+        assert.equals(15000, nave.velocidad())
+        assert.equals("Saliendo en mision", nave.ultimoMensaje())
+        assert.equals(ataque, nave.modo())
+    }
+}
+
+
