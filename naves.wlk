@@ -1,21 +1,35 @@
-class NaveDeCarga {
+class Nave {
+	 var  velocidad = 0
 
-	var velocidad = 0
+	method velocidad(){
+		 return velocidad
+	}
+	method propulsar(){
+		 self.aumentarVelocidadEn(20000)
+	}
+	method aumentarVelocidadEn(aumentoDeVelocidad){
+		 velocidad = 300000.min(velocidad + aumentoDeVelocidad)
+	}
+	method recibirAmenaza(){
+		 
+	}
+}
+class NaveDeCarga inherits Nave{
+
 	var property carga = 0
 
 	method sobrecargada() = carga > 100000
 
 	method excedidaDeVelocidad() = velocidad > 100000
 
-	method recibirAmenaza() {
+	override method recibirAmenaza() {
 		carga = 0
 	}
 
 }
 
-class NaveDePasajeros {
+class NaveDePasajeros inherits Nave {
 
-	var velocidad = 0
 	var property alarma = false
 	const cantidadDePasajeros = 0
 
@@ -25,14 +39,13 @@ class NaveDePasajeros {
 
 	method estaEnPeligro() = velocidad > self.velocidadMaximaLegal() or alarma
 
-	method recibirAmenaza() {
+	override method recibirAmenaza() {
 		alarma = true
 	}
 
 }
 
-class NaveDeCombate {
-	var property velocidad = 0
+class NaveDeCombate inherits Nave  {
 	var property modo = reposo
 	const property mensajesEmitidos = []
 
@@ -44,7 +57,7 @@ class NaveDeCombate {
 
 	method estaInvisible() = velocidad < 10000 and modo.invisible()
 
-	method recibirAmenaza() {
+	override method recibirAmenaza() {
 		modo.recibirAmenaza(self)
 	}
 
