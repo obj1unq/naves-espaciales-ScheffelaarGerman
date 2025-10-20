@@ -97,3 +97,13 @@ describe "Propulsar Naves"{
 
 	 }
 }
+describe "Nave de carga radioactiva" {
+
+    test "Amenaza a nave de carga" {
+        const nave = new NaveDeCargaRadioactiva(carga = 5000, velocidad = 10000, sellado = true)
+        nave.recibirAmenaza()
+        assert.equals(0, nave.velocidad())
+        assert.equals(5000, nave.carga())
+    }
+}
+

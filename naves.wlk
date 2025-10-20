@@ -62,6 +62,16 @@ class NaveDeCombate inherits Nave  {
 	}
 
 }
+class NaveDeCargaRadioactiva inherits NaveDeCarga {
+	var property  sellado = false
+	
+	method sellar(){
+		sellado = true
+	}
+	override method recibirAmenaza() {
+		velocidad = 0
+	}
+}
 
 object reposo {
 
