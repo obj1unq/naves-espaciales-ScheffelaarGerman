@@ -84,3 +84,101 @@ describe "Nave de combate" {
 		assert.equals("Enemigo encontrado", naveEnAtaque.ultimoMensaje())
 	}
 }
+describe "Propulsar Naves"{
+	 test "Porpulsar Nave de carga"{
+		 const naveDeCarga = new NaveDeCarga (velocidad = 0)
+		 naveDeCarga.propulsar()
+		 assert.equals(20000,naveDeCarga.velocidad())
+     }
+	test " Propulsar nave de carga a Velocidad 290000"{
+		 const navePasarjeros = new NaveDePasajeros (velocidad = 290000)
+		 navePasarjeros.propulsar()
+		 assert.equals(300000,navePasarjeros.velocidad())
+
+	 }
+}
+describe "Nave de carga radioactiva" {
+
+    test "Amenaza a nave de carga" {
+        const nave = new NaveDeCargaRadioactiva(carga = 5000, velocidad = 10000, sellado = true)
+        nave.recibirAmenaza()
+        assert.equals(0, nave.velocidad())
+        assert.equals(5000, nave.carga())
+    }
+}
+
+describe "Prepararse para viajar" {
+
+    test "Nave de pasajero velocidad 290000 se prepara para viajar" {
+        const nave = new NaveDePasajeros(velocidad = 290000)
+        nave.prepararseParaViajar()
+        assert.equals(300000, nave.velocidad())
+    }
+
+    test "Nave radioctiva se prepara para viajar" {
+        const nave = new NaveDeCargaRadioactiva(velocidad = 0, sellado = false)
+        nave.prepararseParaViajar()
+        assert.equals(15000, nave.velocidad())
+        assert.that(nave.sellado())      
+    }
+
+    test "Nave en modo compate se preapra para viajar" {
+        const nave = new NaveDeCombate(modo = ataque, velocidad = 0)
+        nave.prepararseParaViajar()
+        assert.equals(15000, nave.velocidad())
+        assert.equals("Volviendo a la base", nave.ultimoMensaje())
+    }
+
+    test "Nave de combate en modo reposo se prepara para viajar " {
+        const nave = new NaveDeCombate(modo = reposo, velocidad = 0)
+        nave.prepararseParaViajar()
+        assert.equals(15000, nave.velocidad())
+        assert.equals("Saliendo en mision", nave.ultimoMensaje())
+        assert.equals(ataque, nave.modo())
+    }
+}
+
+
+describe "Encontrarse con un enemigo" {
+
+    test "Nave de pasajeros " {
+        const nave = new NaveDePasajeros(velocidad = 0, alarma = false)
+        
+        nave.encontrarEnemigo()
+        
+        assert.equals(20000, nave.velocidad())  
+        assert.that(nave.alarma())               
+    }
+	test "Nave de carga" {
+    const nave = new NaveDeCarga(carga = 5000, velocidad = 0)
+    nave.encontrarEnemigo()
+    assert.equals(0, nave.carga())          
+    assert.equals(20000, nave.velocidad()) 
+	}
+	test "Nave radiocativa" {
+    const nave = new NaveDeCargaRadioactiva(carga = 8000, velocidad = 10000, sellado = true)
+    nave.encontrarEnemigo()
+    assert.equals(20000, nave.velocidad())  
+    assert.equals(8000, nave.carga())      
+    assert.that(nave.sellado())             
+	}
+	test "Nave de combate en modo reposo" {
+    const nave = new NaveDeCombate(modo = reposo, velocidad = 0)
+    nave.encontrarEnemigo()
+    assert.equals("¡RETIRADA!", nave.ultimoMensaje())
+    assert.equals(20000, nave.velocidad())
+	}
+	test "Nave de combate en modo ataque" {
+    const nave = new NaveDeCombate(modo = ataque, velocidad = 5000)
+    nave.encontrarEnemigo()
+    assert.equals("Enemigo encontrado", nave.ultimoMensaje())
+    assert.equals(25000, nave.velocidad())
+	}
+
+
+
+
+}
+
+
+
