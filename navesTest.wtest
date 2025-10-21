@@ -139,3 +139,46 @@ describe "Prepararse para viajar" {
 }
 
 
+describe "Encontrarse con un enemigo" {
+
+    test "Nave de pasajeros " {
+        const nave = new NaveDePasajeros(velocidad = 0, alarma = false)
+        
+        nave.encontrarEnemigo()
+        
+        assert.equals(20000, nave.velocidad())  
+        assert.that(nave.alarma())               
+    }
+	test "Nave de carga" {
+    const nave = new NaveDeCarga(carga = 5000, velocidad = 0)
+    nave.encontrarEnemigo()
+    assert.equals(0, nave.carga())          
+    assert.equals(20000, nave.velocidad()) 
+	}
+	test "Nave radiocativa" {
+    const nave = new NaveDeCargaRadioactiva(carga = 8000, velocidad = 10000, sellado = true)
+    nave.encontrarEnemigo()
+    assert.equals(20000, nave.velocidad())  
+    assert.equals(8000, nave.carga())      
+    assert.that(nave.sellado())             
+	}
+	test "Nave de combate en modo reposo" {
+    const nave = new NaveDeCombate(modo = reposo, velocidad = 0)
+    nave.encontrarEnemigo()
+    assert.equals("¡RETIRADA!", nave.ultimoMensaje())
+    assert.equals(20000, nave.velocidad())
+	}
+	test "Nave de combate en modo ataque" {
+    const nave = new NaveDeCombate(modo = ataque, velocidad = 5000)
+    nave.encontrarEnemigo()
+    assert.equals("Enemigo encontrado", nave.ultimoMensaje())
+    assert.equals(25000, nave.velocidad())
+	}
+
+
+
+
+}
+
+
+

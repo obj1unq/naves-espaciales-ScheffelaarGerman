@@ -13,8 +13,13 @@ class Nave {
 	method recibirAmenaza(){}
 
 	method prepararseParaViajar(){
-		self.aumentarVelocidadEn(15000)
+		 self.aumentarVelocidadEn(15000)
 	}
+	method encontrarEnemigo() {
+     self.recibirAmenaza()   //
+     self.propulsar()       
+	 }
+
 }
 class NaveDeCarga inherits Nave{
 
@@ -59,6 +64,9 @@ class NaveDeCombate inherits Nave  {
 
 	method estaInvisible() = velocidad < 10000 and modo.invisible()
 
+	method velocidad(valor) {
+    velocidad = valor
+	}
 	override method recibirAmenaza() {
 		modo.recibirAmenaza(self)
 	}
